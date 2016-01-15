@@ -11,21 +11,28 @@ $( document ).ready(function() {
     'use strict';
 
     /* create map */
-    var map = L.map('mapDiv').setView([39.833333, -98.583333], 4);
+    var map = L.map('mapDiv').setView([44.833333, -85.583333], 6);
     var layer = L.esri.basemapLayer('Gray').addTo(map);
     var layerLabels;
+
+    //var oms = new OverlappingMarkerSpiderfier(map);
 
     $('#mapDiv').height($('body').height());
     map.invalidateSize();
 
     $.ajax({
         dataType: "json",
-        url: "http://stn.wim.usgs.gov/STNServices/Instruments.json?Event=24&EventType=&EventStatus=0&States=&County=&CurrentStatus=&CollectionCondition=&DeploymentType=",
+        url: "https://sigldev.wim.usgs.gov/LaMPServicesTest/sites/siteView.json",
         success: function (json) {
 
             console.log(json);
 
-            var markers = L.markerClusterGroup({disableClusteringAtZoom: 12});
+            var markers = L.markerClusterGroup({
+                spiderfyDistanceMultiplier:3, 
+                disableClusteringAtZoom: 8
+
+            });
+
 
             for (var i = 0; i < json.length; i++) {
                 var a = json[i];
@@ -36,28 +43,29 @@ $( document ).ready(function() {
                 });
 
                 //Baro
-                if (a.SENSOR_TYPE_ID == 1 && a.DEPLOYMENT_TYPE_ID == 3) {
+                if (a.LAKE == "Huron") {
                     marker.setStyle({color: '#FFFF00'});
                 }
                 //meteorological
-                if (a.SENSOR_TYPE_ID == 2) {
+                if (a.LAKE == "Superior") {
                     marker.setStyle({color: '#FFC0CB'});
                 }
                 //rapid deploy gage
-                if (a.SENSOR_TYPE_ID == 5) {
+                if (a.LAKE == "Ontario") {
                     marker.setStyle({color: '#32BF32'});
                 }
                 //storm tide
-                if (a.SENSOR_TYPE_ID == 1 && a.DEPLOYMENT_TYPE_ID == 1 || a.DEPLOYMENT_TYPE_ID == 2) {
+                if (a.LAKE == "Erie") {
                     marker.setStyle({color: '#FF0000'});
                 }
                 //wave height
-                if (a.SENSOR_TYPE_ID == 1 && a.DEPLOYMENT_TYPE_ID == 1) {
+                if (a.LAKE == "Michigan") {
                     marker.setStyle({color: '#800080'});
                 }
 
-                marker.bindPopup("Site ID: " + a.SITE_NO);
+                marker.bindPopup("Site ID: " + a.NAME);
                 markers.addLayer(marker);
+                //oms.addMarker(marker);
             }
             map.addLayer(markers);
 

@@ -38,13 +38,14 @@
     <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     
     <!-- endbower -->
+    <script src="scripts/oms.min.js"></script>
     <!-- endbuild -->
 
     <!-- build:js scripts/combined.js -->
     <!--<script src="scripts/stnSitesGeo.js" defer></script>-->
     <script src="scripts/utilities.js"></script>
     <script src="scripts/core.js"></script>
-    <script src="scripts/example8.js"></script>
+    <script src="scripts/example9.js"></script>
 
     <!-- endbuild -->
 
@@ -113,7 +114,37 @@
 
 
         <div id="mapDiv">
-
+            <div class="leaflet-top  leaflet-right">
+                <div class="leaflet-control-layers leaflet-control-layers-expanded leaflet-control">
+                    <form class="leaflet-control-layers-list">
+                        <div class="leaflet-control-layers-base"></div>
+                        <div class="leaflet-control-layers-separator" style="display: none;"></div>
+                        <div class="leaflet-control-layers-overlays">
+                            <label>
+                                <input type="checkbox" class="leaflet-control-layers-selector" checked="">
+                                <span> Lake Superior</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" class="leaflet-control-layers-selector" checked="">
+                                <span> Lake Michigan</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" class="leaflet-control-layers-selector" checked="">
+                                <span> Lake Huron</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" class="leaflet-control-layers-selector" checked="">
+                                <span> Lake Erie</span>
+                            </label>
+                                                        <label>
+                                <input type="checkbox" class="leaflet-control-layers-selector" checked="">
+                                <span> Lake Ontario</span>
+                            </label>
+                        </div>
+                    </form>
+                </div>  
+            </div>   
+  
             <!--<div id="legendElement" class="panel panel-default legendClass">-->
                 <!--<div id="legendHeading" class=" legendHeading" role="tab">-->
                     <!--<h4 class="panel-title">-->

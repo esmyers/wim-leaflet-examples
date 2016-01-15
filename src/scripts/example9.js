@@ -1,4 +1,11 @@
 
+/////////////////////////////////////////////////////////
+//This example clusters points all the way to max zoom
+//Clicking a cluster will spiderfy the points at zoom 4 to max
+
+
+/////////////////////////////////////////////////////////
+
 
 $( document ).ready(function() {
 
@@ -10,8 +17,7 @@ $( document ).ready(function() {
     var layer = L.esri.basemapLayer('Gray').addTo(map);
     var layerLabels;
 
-    var oms = new OverlappingMarkerSpiderfier(map);
-
+    //var oms = new OverlappingMarkerSpiderfier(map);
 
     $('#mapDiv').height($('body').height());
     map.invalidateSize();
@@ -23,13 +29,18 @@ $( document ).ready(function() {
 
             console.log(json);
 
-            var markers = L.markerClusterGroup({disableClusteringAtZoom: 8});
+            var markers = L.markerClusterGroup({
+                spiderfyDistanceMultiplier:3, 
+                maxClusterRadius: 50,
+                zoomToBoundsOnClick: false
+            });
+
 
             for (var i = 0; i < json.length; i++) {
                 var a = json[i];
 
                 var marker = L.circleMarker(new L.LatLng(a['LATITUDE'], a['LONGITUDE']), {
-                    radius: 3,
+                    radius: 4,
                     fillOpacity: 0.95
                 });
 
@@ -56,12 +67,21 @@ $( document ).ready(function() {
 
                 marker.bindPopup("Site ID: " + a.NAME);
                 markers.addLayer(marker);
-
+                //oms.addMarker(marker);
             }
             map.addLayer(markers);
 
             markers.on('click', function (a) {
-                console.log('marker ' + a.layer);
+                console.log('marker ' + a.NAME);
+            });
+
+            //ISSUE: handles spiderfy click ONLY when clusters visible -- not a solution for overlapping points.
+            markers.on('clusterclick', function (a) {
+                if (map.getZoom() <= 6){
+                    a.layer.spiderfy();
+                }
+                
+                //console.log('cluster ' + a.layer.getAllChildMarkers().length);
             });
 
         }
