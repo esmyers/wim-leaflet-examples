@@ -1,3 +1,4 @@
+//Added by Erik Myers, USGS WiM 1/21/2016
 //EXAMPLE 10 using marker styled with custom CSS icon to appear as a circle
 //divIcons are set according to each marker's LAKE attribute.
 //spiderfy in use here from the original github repo:  https://github.com/jawj/OverlappingMarkerSpiderfier-Leaflet
