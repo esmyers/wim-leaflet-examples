@@ -32,6 +32,7 @@ $( document ).ready(function() {
             var markers = L.markerClusterGroup({
                 spiderfyDistanceMultiplier:3, 
                 maxClusterRadius: 50,
+                
                 zoomToBoundsOnClick: false
             });
 
@@ -67,7 +68,7 @@ $( document ).ready(function() {
 
                 marker.bindPopup("Site ID: " + a.NAME);
                 markers.addLayer(marker);
-                //oms.addMarker(marker);
+                
             }
             map.addLayer(markers);
 
@@ -77,7 +78,8 @@ $( document ).ready(function() {
 
             //ISSUE: handles spiderfy click ONLY when clusters visible -- not a solution for overlapping points.
             markers.on('clusterclick', function (a) {
-                if (map.getZoom() <= 6){
+                
+                if (map.getZoom() >= 6){
                     a.layer.spiderfy();
                 }
                 
