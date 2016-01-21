@@ -275,6 +275,9 @@ input[type="checkbox"], input[type="radio"] {
     font-weight: bold;
 }
 
+/*ADDITIONAL CSS________________________________________________________________________________________________________*/
+
+/*div icon styles for SIGL Points______________________________*/
 .superiorDivicon{
     width: 12px
     height: 12px;
@@ -324,3 +327,27 @@ input[type="checkbox"], input[type="radio"] {
     background: red;
     opacity: 0.85
 }
+/*END div icon styles for SIGL Points______________________________*/
+
+/*LOADER EXPERIMENT FROM MAPBOX______________________________*/
+
+#loader {
+    position:absolute; top:0; bottom:0; width:100%;
+    background:rgba(255, 255, 255, 1);
+    transition:background 1s ease-out;
+    -webkit-transition:background 1s ease-out;
+
+}
+#loader.done {
+    background:rgba(255, 255, 255, 0);
+}
+#loader.hide {
+    display:none;
+}
+#loader .message {
+    position:absolute;
+    left:50%;
+    top:50%;
+}
+
+/*END ADDITIONAL CSS________________________________________________________________________________________________________*/

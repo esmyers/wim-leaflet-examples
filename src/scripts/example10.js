@@ -43,9 +43,13 @@ $( document ).ready(function() {
     $('#mapDiv').height($('body').height());
     map.invalidateSize();
 
+    //startLoading();
+
     //ISSUE: figure out hex keys and add them
-    L.esri.featureLayer({
+   L.esri.featureLayer({
         url: "http://sigl.wim.usgs.gov:6080/arcgis/rest/services/SIGL/SIGLMapper/MapServer/3",
+        simplifyFactor: 0.5,
+        precision: 5,
         style: function(feature){
             if (feature.properties.LAKE == "ls"){
                 return {color: 'DarkCyan', weight:0};
@@ -65,8 +69,10 @@ $( document ).ready(function() {
         }
     }).addTo(map);
 
-    L.esri.featureLayer({
+   L.esri.featureLayer({
         url: "http://sigl.wim.usgs.gov:6080/arcgis/rest/services/SIGL/SIGLMapper/MapServer/1",
+        simplifyFactor: 0.5,
+        precision: 5,
         style: function(){
             return {color: 'DarkOrange', weight: 1 };
         }
@@ -81,7 +87,7 @@ $( document ).ready(function() {
 
             var markers = L.markerClusterGroup({
                 zoomToBoundsOnClick: true,
-                disableClusteringAtZoom:9
+                disableClusteringAtZoom:10
             });
 
             for (var i = 0; i < json.length; i++) {
@@ -90,12 +96,14 @@ $( document ).ready(function() {
                 //create marker divIcon class styles in main.css
                 var marker = L.marker(new L.LatLng(a['LATITUDE'], a['LONGITUDE']), {icon: setDivIcon(a.LAKE)});
 
-                marker.bindPopup("Site ID: " + a.NAME + "<br/> Description: " + a.DESCRIPTION);
+                marker.bindPopup("<b>Site Name:</b> " + a.NAME + "<br/><b>Site ID:</b> " + a.SITE_ID + "<br/> <b>Description: </b>" + a.DESCRIPTION);
                 markers.addLayer(marker);
                 oms.addMarker(marker);
 
             }
             map.addLayer(markers);
+
+            //map.on('ready', finishedLoading);
 
             map.on("click", function(event){
                 console.log(event);
@@ -106,4 +114,15 @@ $( document ).ready(function() {
             });
         }
     });
+
+    /*function startLoading(){
+        loader.className = "";
+    }
+
+    function finishedLoading(){
+        loader.className = "done";
+        setTimeout(function(){
+            loader.className = "hide";
+        }, 500);
+    }*/
 });
