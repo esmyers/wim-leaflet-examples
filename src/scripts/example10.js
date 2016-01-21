@@ -2,6 +2,7 @@
 //EXAMPLE 10 using marker styled with custom CSS icon to appear as a circle
 //divIcons are set according to each marker's LAKE attribute.
 //spiderfy in use here from the original github repo:  https://github.com/jawj/OverlappingMarkerSpiderfier-Leaflet
+//Auxiliary polygon layers brought in using ESRI-LEAFLET
 //MUCH SLOWER than circlemarker implementation, but does work with original spiderfy library 
 
 $( document ).ready(function() {
@@ -41,6 +42,35 @@ $( document ).ready(function() {
 
     $('#mapDiv').height($('body').height());
     map.invalidateSize();
+
+    //ISSUE: figure out hex keys and add them
+    L.esri.featureLayer({
+        url: "http://sigl.wim.usgs.gov:6080/arcgis/rest/services/SIGL/SIGLMapper/MapServer/3",
+        style: function(feature){
+            if (feature.properties.LAKE == "ls"){
+                return {color: 'DarkCyan', weight:0};
+            }
+            if (feature.properties.LAKE == "lm"){
+                return {color: 'DarkKhaki', weight:0};
+            }
+            if (feature.properties.LAKE == "lh"){
+                return {color: 'IndianRed', weight:0};
+            }
+            if (feature.properties.LAKE == "le"){
+                return {color: 'Olive', weight:0};
+            }
+            if (feature.properties.LAKE == "lo"){
+                return {color: 'MediumPurple', weight:0};
+            }
+        }
+    }).addTo(map);
+
+    L.esri.featureLayer({
+        url: "http://sigl.wim.usgs.gov:6080/arcgis/rest/services/SIGL/SIGLMapper/MapServer/1",
+        style: function(){
+            return {color: 'DarkOrange', weight: 1 };
+        }
+    }).addTo(map);
 
     $.ajax({
         dataType: "json",
